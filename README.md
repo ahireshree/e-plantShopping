@@ -1,1 +1,2 @@
 # coding-project-template
+e-PlantShopping is a simple e-commerce website for browsing and purchasing plants online. It allows users to view plant listings, add items to the cart, update quantities, and place orders with a smooth and user-friendly shopping experience.
