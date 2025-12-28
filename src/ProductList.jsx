@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import './ProductList.css';
 import CartItem from './CartItem';
 import { addItem } from "./CartSlice";
 
 function ProductList({ onHomeClick }) {
     const dispatch = useDispatch();
-
+    const cart = useSelector(state => state.cart.items);
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false);
     const [addedToCart, setAddedToCart] = useState({});
@@ -271,6 +271,10 @@ function ProductList({ onHomeClick }) {
         setShowCart(false);
     };
 
+   const calculateTotalQuantity = () => {
+  return cart.reduce((total, item) => total + item.quantity, 0);
+};
+
     return (
         <div>
             <div className="navbar" style={styleObj}>
@@ -288,13 +292,20 @@ function ProductList({ onHomeClick }) {
                 </div>
 
                 <div style={styleObjUl}>
-                    <a href="#" onClick={handlePlantsClick} style={styleA}>
-                        Plants
-                    </a>
-                    <a href="#" onClick={handleCartClick} style={styleA}>
-                        🛒
-                    </a>
-                </div>
+  <a href="#" onClick={handlePlantsClick} style={styleA}>
+    Plants
+  </a>
+
+  <a href="#" onClick={handleCartClick} style={{ ...styleA, position: "relative" }}>
+    🛒
+
+    {calculateTotalQuantity() > 0 && (
+      <span className="cart-badge">
+        {calculateTotalQuantity()}
+      </span>
+    )}
+  </a>
+</div>
             </div>
 
             {!showCart ? (
